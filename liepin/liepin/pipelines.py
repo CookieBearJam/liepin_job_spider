@@ -7,6 +7,8 @@
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 
+from .models.es_types import liePinJavaType
+
 
 class LiepinPipeline:
     def process_item(self, item, spider):
@@ -16,24 +18,18 @@ class LiepinPipeline:
 # 将爬到的数据存储到csv文件里
 class savefileTongscrapyPipeline(object):
     def __init__(self):
-        # self.item_list = []
         pass
 
     def process_item(self, item, spider):
-        # self.item_list.append(item)
-        print("job_title:", item['job_title'])
+        print("pos_name:", item['pos_name'])
         return item
 
     def close_spider(self, spider):
-        print("sort")
-
-
-from .models.es_types import liepinType
+        print("spider closed")
 
 
 class ElasticsearchPipeline:
-
     def process_item(self, item, spider):
-        sn = liepinType(item)
+        sn = liePinJavaType(item)
         sn.save()
         return item
