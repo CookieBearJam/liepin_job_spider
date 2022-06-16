@@ -107,6 +107,6 @@ DOWNLOADER_MIDDLEWARES = {
 }
 
 ITEM_PIPELINES = {
-    'liepin.pipelines.savefileTongscrapyPipeline': 300,
+    # 'liepin.pipelines.savefileTongscrapyPipeline': 300,
     'liepin.pipelines.ElasticsearchPipeline': 350
 }

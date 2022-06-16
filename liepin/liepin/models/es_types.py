@@ -1,19 +1,18 @@
 # -*- codeing: utf-8 -*-
-from elasticsearch import Elasticsearch
 from elasticsearch_dsl import Document, Keyword, Text, Integer, Float, Date
 from elasticsearch_dsl.connections import connections
 
-# 防止超时所以加上timeout这个方式建立本地的es连接
+# 防止超时所以加上timeout这个方式建立es连接
+# es = connections.create_connection(hosts=["10.112.134.244:9200"], http_auth="elastic:123456", timeout=480)
+
+
 es = connections.create_connection(host="127.0.0.1", timeout=480)
-
-
-# es = Elasticsearch([{'host': "127.0.0.1", 'port': 9200}], timeout=30)
 
 # class suningType(Document):
 class liePinJavaType(Document):
     # 设置index名称和document名称
     class Index:
-        name = "liepin_java_t"
+        name = "job_info_full"
         settings = {
             "number_of_shards": 1,
             "number_of_replicas": 0,
@@ -32,9 +31,6 @@ class liePinJavaType(Document):
                 "salary_fee_months": {
                     "type": "integer"
                 },
-                # "main_tech": {
-                #     "type": "text"
-                # },
                 "pos_keyword": {
                     "type": "text"
                 },
@@ -59,12 +55,6 @@ class liePinJavaType(Document):
                 "charge_pos": {
                     "type": "text"
                 },
-                # "pos_responsibility": {
-                #     "type": "text"
-                # },
-                # "pos_requirement": {
-                #     "type": "text"
-                # },
                 "pos_detail": {
                     "type": "text"
                 },
@@ -92,7 +82,6 @@ class liePinJavaType(Document):
     salary_high_bound = Float()
     salary_fee_months = Integer()
 
-    # main_tech = Text(analyzer="ik_smart")
     pos_keyword = Text(analyzer="ik_smart")
     pos_domain = Keyword()
 
@@ -105,8 +94,6 @@ class liePinJavaType(Document):
     person_in_charge = Text(analyzer="ik_smart")
     charge_pos = Text(analyzer="ik_smart")
 
-    # pos_responsibility = Text(analyzer="ik_smart")
-    # pos_requirement = Text(analyzer="ik_smart")
     pos_detail = Text(analyzer="ik_smart")
 
     enterprise = Text(analyzer="ik_smart")
@@ -125,7 +112,6 @@ class liePinJavaType(Document):
                 'salary_low_bound',
                 'salary_high_bound',
                 'salary_fee_months',
-                # 'main_tech',
                 'pos_keyword',
                 'pos_domain',
                 'city',
@@ -134,8 +120,6 @@ class liePinJavaType(Document):
                 'exp',
                 'person_in_charge',
                 'charge_pos',
-                # 'pos_responsibility',
-                # 'pos_requirement',
                 'pos_detail',
                 'enterprise',
                 'enterprise_scale',
@@ -155,7 +139,6 @@ class liePinJavaType(Document):
         self.salary_low_bound = item['salary_low_bound']
         self.salary_high_bound = item['salary_high_bound']
         self.salary_fee_months = item['salary_fee_months']
-        # self.main_tech = item['main_tech']
         self.pos_keyword = item['pos_keyword']
         self.pos_domain = item['pos_domain']
         self.city = item['city']
@@ -164,8 +147,6 @@ class liePinJavaType(Document):
         self.exp = item['exp']
         self.person_in_charge = item['person_in_charge']
         self.charge_pos = item['charge_pos']
-        # self.pos_responsibility = item['pos_responsibility']
-        # self.pos_requirement = item['pos_requirement']
         self.pos_detail = item['pos_detail']
         self.enterprise = item['enterprise']
         self.enterprise_scale = item['enterprise_scale']
