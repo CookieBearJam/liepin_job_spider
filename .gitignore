@@ -1,3 +1,5 @@
-.idea
-liepin/.idea/
+# 当前路径下的idea文件夹
+.idea/
+
+# 内层路径下的idea文件夹
 /liepin/.idea/
